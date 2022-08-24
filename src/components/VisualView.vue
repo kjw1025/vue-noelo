@@ -15,7 +15,7 @@
 
         <swiper-slide class="swiper-slide" v-for="(item, index) in slideData" v-bind:key="index">
           <VisualList 
-            v-bind:vimg="item.vimg" 
+            v-bind:vimg="item.vimg"
             v-bind:vtitle="item.vtitle" 
             v-bind:vtxt="item.vtxt" 
             :vbt="item.vbt" 
@@ -49,28 +49,28 @@ export default {
     const slideData = ref([]);
     slideData.value = [
       {
-        vimg:'visual-1',
+        vimg:'PC_minimal_new.png',
         vtitle:"밀크 에센스 로션",
         vtxt:"국내 최초 100% <br />식품 그레이드 성분",
         vbt:"SHOP",
         vlink:"#"
       },
       {
-        vimg:'visual-2',
-        vtitle:"제품2",
+        vimg:'PC1_newborn.png',
+        vtitle:"밀크 에센스 로션",
         vtxt:"국내 최초 100% <br />식품 그레이드 성분",
         vbt:"SHOP",
         vlink:"#"
       },
       {
-        vimg:'visual-3',
+        vimg:'PC2_BabyEssence.png',
         vtitle:"제품3",
         vtxt:"국내 최초 100% <br />식품 그레이드 성분",
         vbt:"SHOP",
         vlink:"#"
       },
       {
-        vimg:'visual-4',
+        vimg:'PC3_Branding.png',
         vtitle:"제품4",
         vtxt:"국내 최초 100% <br />식품 그레이드 성분",
         vbt:"SHOP",
@@ -78,12 +78,11 @@ export default {
       }
     ];
 
-
     const onSwiper = (swiper) => {
       console.log(swiper)
     };
     const onSlideChange = () => {
-      console.log('slide change');
+      // console.log('slide change');
     };
     return  {
       onSwiper,
