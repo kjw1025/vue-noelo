@@ -8,49 +8,22 @@
             </div>
             <div class="mb-wrap">
                 <ul class="mb-menu">
-                    <li>
-                        <span class="mb-mainmenu">SHOP</span>
-                        <ul class="mb-submenu">
-                            <li><a href="">ALL PRODUCT</a></li>
-                            <li><a href="">NEWBORN</a></li>
-                            <li><a href="">BABY</a></li>
-                            <li><a href="">FAMILY</a></li>
-                            <li><a href="">BATH GOODS</a></li>
-                            <li><a href="">PRESENTS</a></li>
+
+                    <li v-for="(item, index) in mbmenu" v-bind:key="index">
+                        <span class="mb-mainmenu" v-if=" item.menuType == 'S' ">{{item.mainText}}</span>
+                        <a v-bind:href="item.mainLink" class="mb-mainmenu"
+                            v-if=" item.menuType == 'A' ">{{item.mainText}}</a>
+
+                        <ul class="mb-submenu" v-if="item.menuType == 'S'">
+
+                            <li v-for="(subitem, subindex) in item.subArr" v-bind:key="subindex">
+                                <a v-bind:href="subitem.link">{{subitem.title}}</a>
+                            </li>
+
                         </ul>
+
                     </li>
-                    <li>
-                        <span class="mb-mainmenu">ABOUT</span>
-                        <ul class="mb-submenu">
-                            <li><a href="">BRAND STORY</a></li>
-                            <li><a href="">WHO WE ARE</a></li>
-                            <li><a href="">MAKE A WISH</a></li>
-                            <li><a href="">PRESS</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <span class="mb-mainmenu">TRUST</span>
-                        <ul class="mb-submenu">
-                            <li><a href="">FOOD GRADE</a></li>
-                            <li><a href="">PENTACERA™</a></li>
-                            <li><a href="">BABY SKINCARE</a></li>
-                            <li><a href="">CERTIFICATIONS</a></li>
-                            <li><a href="">INGREDIENT</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#" class="mb-mainmenu">STOCKISTS</a>
-                    </li>
-                    <li>
-                        <a href="#" class="mb-mainmenu">REVIEW</a>
-                    </li>
-                    <li>
-                        <span class="mb-mainmenu">BENEFITS</span>
-                        <ul class="mb-submenu">
-                            <li><a href="">EVENTS</a></li>
-                            <li><a href="">MEMBERS</a></li>
-                        </ul>
-                    </li>
+
                 </ul>
             </div>
         </div>
@@ -59,15 +32,27 @@
 
 <script>
     import {
+        computed,
         onMounted
     } from 'vue';
+
     import $ from 'jquery';
+    import {
+        useStore
+    } from 'vuex';
 
     export default {
-        setup() {
-            // 화면에 html 의 구성이 완료되면 
-            onMounted(() => {
 
+        setup() {
+
+            // vuex 에 기능을 사용하기 위해서 참조 객체를 만든다.
+            // 현재는 store 변수를 통해서 접근하여 기능을 실행한다.
+            const store = useStore();
+            // store 의 state (데이터) 는 수시로 변경되므로 computed 로 감시한다.
+            const mbmenu = computed(() => store.getters.getMbMenuData);
+
+            // 화면에 html 의 구성이 완료되면
+            onMounted(() => {
                 // 모바일 메뉴
                 let mb_div = $('.mb-div');
 
@@ -77,11 +62,6 @@
                     mb_div.show();
                 });
 
-                // 모바일 닫기 버튼 기능
-                let mb_close = $('.mb-close');
-                mb_close.click(function () {
-                    mb_div.hide();
-                });
 
                 // 배경 누르면 닫기
                 mb_div.click(function () {
@@ -119,10 +99,12 @@
                             temp.addClass('mb-mainmenu-open');
                             // 서브메뉴 펼치기
                             mb_menu_li.eq(index).find('.mb-submenu').show();
-                        }
-                    });
-                });
 
+                        }
+
+                    });
+
+                });
                 // window 너비 체크
                 $(window).resize(function () {
                     let temp = $(window).width();
@@ -134,11 +116,11 @@
                 });
 
             });
-            return {
 
+            return {
+                mbmenu
             }
         }
-
     }
 </script>
 
