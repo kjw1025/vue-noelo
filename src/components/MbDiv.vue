@@ -62,6 +62,12 @@
           mb_div.show();
         });
 
+        // 모바일 닫기 버튼 기능
+        let mb_close = $('.mb-close');
+        mb_close.click(function () {
+          mb_div.hide();
+        });
+
 
         // 배경 누르면 닫기
         mb_div.click(function () {
