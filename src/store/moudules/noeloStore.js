@@ -25,7 +25,7 @@ const mutations = {
 const getters = {
   getMbMenuData(state){
     // 여러가지 데이터를 원하는 값으로 정렬하는 과정 필요
-    console.log(state.mbMenuData);
+    // console.log(state.mbMenuData);
     return state.mbMenuData
   }
 }
