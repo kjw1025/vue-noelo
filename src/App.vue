@@ -7,82 +7,7 @@
     <!-- 내용 -->
     <div class="wrap">
       <!-- 상단 -->
-      <header class="header">
-        <div class="inner">
-
-          <button class="mb-bt"></button>
-
-          <a href="#" class="logo"></a>
-          <div class="gnb">
-
-            <ul class="menu clearfix">
-              <li>
-                <a href="">SHOP</a>
-                <ul class="submenu">
-                  <li><a href="">ALL PRODUCT</a></li>
-                  <li><a href="">NEWBORN</a></li>
-                  <li><a href="">BABY</a></li>
-                  <li><a href="">FAMILY</a></li>
-                  <li><a href="">BATH GOODS</a></li>
-                  <li><a href="">PRESENTS</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="">ABOUT</a>
-                <ul class="submenu">
-                  <li><a href="">BRAND STORY</a></li>
-                  <li><a href="">WHO WE ARE</a></li>
-                  <li><a href="">MAKE A WISH</a></li>
-                  <li><a href="">PRESS</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="">TRUST</a>
-                <ul class="submenu">
-                  <li><a href="">FOOD GRADE</a></li>
-                  <li><a href="">PENTACERA™</a></li>
-                  <li><a href="">BABY SKINCARE</a></li>
-                  <li><a href="">CERTIFICATIONS</a></li>
-                  <li><a href="">INGREDIENT</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="">STOCKISTS</a>
-              </li>
-              <li>
-                <a href="">REVIEW</a>
-              </li>
-              <li>
-                <a href="">BENEFITS</a>
-                <ul class="submenu">
-                  <li><a href="">EVENTS</a></li>
-                  <li><a href="">MEMBERS</a></li>
-                </ul>
-              </li>
-            </ul>
-
-          </div>
-          <div class="member">
-            <ul class="member-list clearfix">
-              <li>
-                <a href="#" class="member-cart">
-                  <i class="tooltip">장바구니</i>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="member-mypage">
-                  <i class="tooltip">마이페이지</i>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="member-login">
-                  <i class="tooltip">로그인</i>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </header>
+      <HeaderView />
       <!-- 비주얼 -->
       <VisualView />
       <!-- 제품 카테고리 -->
@@ -126,14 +51,12 @@
   </div>
 </template>
 <script>
-  import {
-    onMounted
-  } from 'vue';
+  import {useStore} from 'vuex'; 
 
-  import $ from 'jquery';
 
   import MbDiv from '@/components/MbDiv.vue';
   import BannerView from '@/components/BannerView.vue';
+  import HeaderView from '@/components/HeaderView.vue';
   import VisualView from '@/components/VisualView.vue';
   import CategoryView from '@/components/CategoryView.vue';
   import SiteMap from '@/components/SiteMap.vue';
@@ -144,34 +67,14 @@
       MbDiv,
       BannerView,
       VisualView,
+      HeaderView,
       CategoryView,
       SiteMap
     },
     setup() {
-      onMounted(() => {
-        // 스크롤시 header 고정
-        let header = $('.header');
-        let wrap = $('.wrap');
-        let fixY = $('.banner').height();
-
-        $(window).scroll(function () {
-          // 스크롤바의 세로상단 px 값
-          let temp = $(window).scrollTop();
-          // 50 은 banner 의 높이값 px
-          if (temp > fixY) {
-            header.addClass('header-fix');
-            wrap.addClass('wrap-fix');
-          } else {
-            header.removeClass('header-fix');
-            wrap.removeClass('wrap-fix');
-          }
-        });
-
-      });
-
-      return {
-
-      }
+      const store = useStore();
+      store.dispatch('fetchMenu');
+      return {}
     }
   }
 </script>
@@ -235,8 +138,6 @@
     background: #1ABC9C;
     color: #fff;
   }
-
-  #app {}
 
 
   /* 공통클래스 */
@@ -494,7 +395,6 @@
       display: block;
     }
   }
-
 
   /* 하단 */
   .footer {
